@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MyCustomWriter implements ItemWriter<Manager> {
+public class MySecondCustomWriter implements ItemWriter<Manager> {
 
     @Autowired
     ManagerRepository managerRepository ;

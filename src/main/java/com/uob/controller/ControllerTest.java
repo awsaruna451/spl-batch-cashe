@@ -23,15 +23,11 @@ import java.util.List;
 @RequestMapping("/jobs")
 public class ControllerTest {
 
-    @Autowired
-    private JobLauncher jobLauncher;
-    @Autowired
-    private Job job;
 
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/importCustomers")
+/*    @PostMapping("/importCustomers")
     public void importCsvToDBJob() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis()).toJobParameters();
@@ -41,7 +37,7 @@ public class ControllerTest {
                  JobParametersInvalidException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @GetMapping("/managers")
     public ResponseEntity<List<Manager>> viewManagers() {

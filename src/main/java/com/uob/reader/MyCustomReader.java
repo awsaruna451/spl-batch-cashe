@@ -3,21 +3,14 @@ package com.uob.reader;
 import javax.sql.DataSource;
 
 import com.uob.model.Customer;
-import com.uob.model.Employee;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
-
-
-@Component
 public class MyCustomReader extends JdbcCursorItemReader<Customer> implements ItemReader<Customer>{
 
 
