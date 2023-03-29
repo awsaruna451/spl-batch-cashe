@@ -1,3 +1,4 @@
+/*
 package com.uob;
 
 import org.slf4j.Logger;
@@ -30,24 +31,28 @@ public class BatchApplication implements CommandLineRunner {
     @Override
     public void run(String... jobNames) throws Exception {
         // Execute the first job
+*/
 /*        logger.info("TttttTttttttttttttt::::::"+args[0]);
         JobParameters jobParameters1 = new JobParametersBuilder()
                 .addString("jobName", args[0])
                 .toJobParameters();
         JobExecution jobExecution1 = jobLauncher.run(job, jobParameters1);
-        System.out.println(jobExecution1.getStatus());*/
+        System.out.println(jobExecution1.getStatus());*//*
+
         for (String jobName : jobNames) {
             Job job = getJob(jobName);
             JobParameters jobParameters = new JobParametersBuilder().toJobParameters();
             jobLauncher.run(job, jobParameters);
         }
 
-    /*    // Execute the second job
+    */
+/*    // Execute the second job
         JobParameters jobParameters2 = new JobParametersBuilder()
                 .addString("jobName", job2.getName())
                 .toJobParameters();
         JobExecution jobExecution2 = jobLauncher.run(job2, jobParameters2);
-        System.out.println(jobExecution2.getStatus());*/
+        System.out.println(jobExecution2.getStatus());*//*
+
 
         //System.exit(0);
     }
@@ -63,3 +68,4 @@ public class BatchApplication implements CommandLineRunner {
         }
     }
 }
+*/

@@ -1,19 +1,21 @@
 package com.uob.reader;
 
-import com.uob.repo.CustomerRepository;
+
+import com.uob.repo.OrderLineItemRepository;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 
+
 import java.util.Iterator;
 
-public class JpaItemReader<T> implements ItemReader<T> {
+public class OrderItemReader<T> implements ItemReader<T> {
 
-    private final CustomerRepository repository;
+    private final OrderLineItemRepository repository;
     private Iterator<T> iterator;
 
-    public JpaItemReader(CustomerRepository repository) {
+    public OrderItemReader(OrderLineItemRepository repository) {
         this.repository = repository;
     }
 

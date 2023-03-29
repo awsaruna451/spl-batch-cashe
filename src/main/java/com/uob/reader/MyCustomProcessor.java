@@ -12,7 +12,6 @@ public class MyCustomProcessor implements ItemProcessor<Customer, Manager> {
     public Manager process(Customer emp) throws Exception {
         System.out.println("MyBatchProcessor : Processing data : "+emp);
         Manager manager = new Manager();
-        //manager.setId(emp.getId());
         manager.setName(emp.getFirstName().toUpperCase());
         manager.setContactNo(emp.getContactNo());
         return manager;

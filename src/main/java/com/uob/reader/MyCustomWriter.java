@@ -27,8 +27,8 @@ public class MyCustomWriter implements ItemWriter<Manager> {
             System.out.println("MyCustomWriter    : Writing data    : " + data.getId()+" : "+data.getName()+" : "+data.getContactNo());
             Manager manager = managerRepository.save(data);
             //redisTemplate.opsForValue().set("MANAGER", manager);
-            redisTemplate.opsForHash().delete("MANAGER1", manager.getId());
-            redisTemplate.opsForHash().put("MANAGER1", manager.getId(), manager);
+          //  redisTemplate.opsForHash().delete("MANAGER1", manager.getId());
+         //   redisTemplate.opsForHash().put("MANAGER1", manager.getId(), manager);
             id = manager.getId();
         }
       //  redisTemplate.opsForHash().get("MANAGER", id);
