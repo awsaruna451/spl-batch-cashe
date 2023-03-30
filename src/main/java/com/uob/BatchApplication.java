@@ -5,11 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.configuration.JobLocator;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.NoSuchJobException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class BatchApplication implements CommandLineRunner {
@@ -20,6 +25,8 @@ public class BatchApplication implements CommandLineRunner {
     private JobLauncher jobLauncher;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private JobLocator jobLocator;
 
 
     @Override
@@ -36,6 +43,18 @@ public class BatchApplication implements CommandLineRunner {
         }
 
     }
+
+/*    public List<Job> getJobs() throws NoSuchJobException {
+        List<Job> jobs = new ArrayList<>();
+        String[] jobNames = applicationContext.getBeanNamesForType(Job.class);
+        for (String jobName : jobNames) {
+            Job job = jobLocator.getJob(jobName);
+            if (job != null) {
+                jobs.add(job);
+            }
+        }
+        return jobs;
+    }*/
 
 /*
     private Job getJob(String jobName) {
