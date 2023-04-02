@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manager implements Serializable {
+public class Manager implements MutiClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;

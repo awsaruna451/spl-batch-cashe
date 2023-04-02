@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Employee {
+public class Employee implements MutiClass {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private int id;

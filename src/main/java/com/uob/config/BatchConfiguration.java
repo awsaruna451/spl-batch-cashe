@@ -1,11 +1,9 @@
 package com.uob.config;
 
-import com.uob.model.Customer;
-import com.uob.model.Manager;
-import com.uob.model.OrderLineItems;
-import com.uob.model.OrderLineItemsBatch;
+import com.uob.model.*;
 import com.uob.reader.*;
 import com.uob.repo.CustomerRepository;
+import com.uob.repo.ManagerRepository;
 import com.uob.repo.OrderLineItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,12 +49,20 @@ public class BatchConfiguration {
     @Autowired
     @Qualifier("customerRepo")
     private CustomerRepository myEntityRepository;
+    @Autowired
+    @Qualifier("mangerRepo")
+    private ManagerRepository managerRepository;;
 
     @Autowired
     private DataSource dataSource;
 
 
     @Bean(name = "customerReader")
+    public CustomerManagerItemReader multiJpaItemReader() {
+        return new CustomerManagerItemReader(myEntityRepository,managerRepository);
+    }
+
+    @Bean(name = "multiJPAReader")
     public JpaItemReader<Customer> jpaItemReader() {
         return new JpaItemReader<>(myEntityRepository);
     }
@@ -64,6 +70,10 @@ public class BatchConfiguration {
     @Bean(name = "orderLineItemReader")
     public OrderItemReader<OrderLineItems> jpaOrderLineItemReader() {
         return new OrderItemReader<>(orderLineItemRepository);
+    }
+    @Bean(name = "multiJpaWriter")
+    public MultiObjectWriter multiJpaWriter() {
+        return new MultiObjectWriter();
     }
 
 
@@ -80,14 +90,28 @@ public class BatchConfiguration {
         return jobBuilderFactory.get("customerJob")
                 .flow(createStep()).end().build();
     }
+    @Bean(name = "multiJPAJob")
+    public Job multiJPAJob() {
+        logger.info("MYSTEP LOGGERR::::");
+        return jobBuilderFactory.get("multiJPAJob")
+                .flow(multiJPAStep()).end().build();
+    }
 
     @Bean
     public Step createStep() {
         return stepBuilderFactory.get("MyStep")
-                .<Customer, Manager> chunk(100)
+                .<Customer, Manager> chunk(10)
                 .reader(jpaItemReader())
                 .processor(myCustomProcessor)
                 .writer(myCustomWriter)
+                .build();
+    }
+    @Bean
+    public Step multiJPAStep() {
+        return stepBuilderFactory.get("multiJPAStep")
+                .<MultiJobObject, MultiJobObject> chunk(1)
+                .reader(multiJpaItemReader())
+                .writer(multiJpaWriter())
                 .build();
     }
 

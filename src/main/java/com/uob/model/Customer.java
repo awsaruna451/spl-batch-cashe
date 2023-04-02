@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class Customer implements MutiClass{
 
     @Id
     @Column(name = "CUSTOMER_ID")
