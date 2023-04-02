@@ -1,1 +1,3 @@
 RedisConnectionFactory
+
+org.springframework.data.redis.connection.RedisConnectionFactory
