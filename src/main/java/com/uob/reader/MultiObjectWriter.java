@@ -23,8 +23,6 @@ public class MultiObjectWriter implements ItemWriter<MultiJobObject> {
 
     @Override
     public void write(List<? extends MultiJobObject> list) throws Exception {
-        int id=0;
-
         for (MultiJobObject data : list) {
             Map<String, List<Customer>> customerMap  =  data.getCustomerMap();
             Map<String, List<Manager>> managerMap  =  data.getManagerMap();

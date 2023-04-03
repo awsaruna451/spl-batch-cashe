@@ -5,6 +5,9 @@ import com.uob.model.Manager;
 import com.uob.model.MultiJobObject;
 import com.uob.repo.CustomerRepository;
 import com.uob.repo.ManagerRepository;
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
@@ -12,14 +15,13 @@ import org.springframework.batch.item.UnexpectedInputException;
 
 import java.util.*;
 
-
-public class CustomerManagerItemReader implements ItemReader<MultiJobObject> {
+public class CustomerManagerItemReader implements ItemReader<MultiJobObject> , StepExecutionListener {
 
     private final CustomerRepository customerRepository;
     private final ManagerRepository managerRepository;
     private List<Customer> customerIterator;
     private List<Manager> managerIterator;
-    private Iterator<MultiJobObject> iterator;
+    private MultiJobObject iterator = null;
 
     public CustomerManagerItemReader(CustomerRepository customerRepository, ManagerRepository managerRepository) {
 
@@ -30,6 +32,17 @@ public class CustomerManagerItemReader implements ItemReader<MultiJobObject> {
     @Override
     public MultiJobObject read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
+        if (iterator != null) {
+            MultiJobObject result = iterator;
+            iterator = null;
+            return result;
+        }
+        return null;
+
+    }
+
+    @Override
+    public void beforeStep(StepExecution stepExecution) {
         if (customerIterator == null || customerIterator.isEmpty()) {
             customerIterator = customerRepository.findAll();
         }
@@ -40,12 +53,19 @@ public class CustomerManagerItemReader implements ItemReader<MultiJobObject> {
         cuMap.put("CUS", customerIterator);
         Map<String, List<Manager>> maMap = new HashMap<>();
         maMap.put("MA", managerIterator);
-        MultiJobObject multiJobObject = MultiJobObject.builder()
+
+
+        iterator = MultiJobObject.builder()
                 .customerMap(cuMap)
                 .managerMap(maMap).build();
-        return multiJobObject;
+
+    }
 
 
+
+    @Override
+    public ExitStatus afterStep(StepExecution stepExecution) {
+        return null;
     }
 }
 
