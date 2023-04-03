@@ -24,7 +24,6 @@ import java.util.List;
 
 @Configuration
 @EnableBatchProcessing
-@EnableJpaRepositories(basePackages = "com.uob.repo")
 public class BatchConfiguration {
 
     final static Logger logger = LoggerFactory.getLogger(BatchConfiguration.class);
